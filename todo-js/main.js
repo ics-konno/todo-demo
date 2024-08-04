@@ -12,18 +12,23 @@ addButton.addEventListener("click", () => {
 })
 
 const render = () => {
-    const wrapper = document.getElementById("todo-wrapper");
+    const wrapper = document.querySelector("#todo-wrapper");
     wrapper.children.forEach(child => {
-        child
+        child.remove()
     })
+    // for(const child of wrapper.children){
+    //     child.remove()
+    // }
     todoList.forEach(todo => {
         const list = document.createElement("li")
+        const label = document.createElement("label")
         const input = document.createElement("input")
         input.type = "checkbox"
-        list.appendChild
+        label.appendChild(input)
         const title = document.createElement("span")
         title.innerText = todo.text
-        list.appendChild(title)
+        label.appendChild(title)
+        list.appendChild(label)
         const button = document.createElement("button")
         button.innerText = "削除"
         button.addEventListener("click", () => {
@@ -46,6 +51,6 @@ const addTodo = (text) => {
 }
 
 const deleteTodo = (id) => {
-    todoList = todoList.filter(current => current.id !== todo.id)
+    todoList = todoList.filter(current => current.id !== id)
     render()
 }
