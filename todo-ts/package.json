@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tsc": "npx tsc main.ts --watch"
+    "tsc": "npx tsc --watch"
   },
   "keywords": [],
   "author": "",

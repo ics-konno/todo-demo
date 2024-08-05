@@ -39,6 +39,7 @@ const render = () => {
     const label = document.createElement("label");
     const input = document.createElement("input");
     input.type = "checkbox";
+    input.checked = todo.checked
     label.appendChild(input);
     const title = document.createElement("span");
     title.innerText = todo.text;

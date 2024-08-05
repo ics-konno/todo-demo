@@ -1,6 +1,6 @@
-const todoList = [];
+const todoList: {id: number, text:string, checked: boolean}[] = [];
 
-const addTodo = (text) => {
+const addTodo = (text: string) => {
   const ids = todoList.map((todo) => todo.id);
   const maxId = ids.length > 0 ? Math.max(...ids) : 0;
   todoList.push({
@@ -11,17 +11,18 @@ const addTodo = (text) => {
   render();
 };
 
-const deleteTodo = (id) => {
+const deleteTodo = (id: number) => {
   const index = todoList.findIndex((current) => current.id === id);
   todoList.splice(index, 1);
   render();
 };
 
-const addForm = document.getElementById("add-form");
-addForm.addEventListener("submit", (e) => {
+const addForm = document.querySelector<HTMLFormElement>("#add-form");
+addForm?.addEventListener("submit", (e) => {
   e.preventDefault();
-  const value = addForm.todo.value;
-  if (!value) {
+  const formData = new FormData(addForm)
+  const value = formData.get("todo")
+  if (typeof value !== "string" || !value) {
     return;
   }
   addTodo(value);
@@ -31,7 +32,7 @@ addForm.addEventListener("submit", (e) => {
 // 入力値を描画する
 const render = () => {
   const wrapper = document.querySelector("#todo-wrapper");
-  wrapper.children[0].remove();
+  wrapper?.children[0].remove();
   const ul = document.createElement("ul");
   todoList.forEach((todo) => {
     const list = document.createElement("li");
@@ -39,6 +40,7 @@ const render = () => {
     const label = document.createElement("label");
     const input = document.createElement("input");
     input.type = "checkbox";
+    input.checked = todo.checked
     label.appendChild(input);
     const title = document.createElement("span");
     title.innerText = todo.text;
@@ -46,7 +48,10 @@ const render = () => {
     list.appendChild(label);
     // チェック
     input.addEventListener("change", (e) => {
-      todo.checked = e.target.value;
+      if(!(e.target instanceof HTMLInputElement)){
+        return
+      }
+      todo.checked = e.target.checked;
     });
     // 削除ボタン
     const button = document.createElement("button");
@@ -57,5 +62,5 @@ const render = () => {
     list.appendChild(button);
     ul.appendChild(list);
   });
-  wrapper.appendChild(ul);
+  wrapper?.appendChild(ul);
 };
